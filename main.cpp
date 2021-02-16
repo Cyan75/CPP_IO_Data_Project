@@ -15,6 +15,7 @@ private:
     std::string name;
     int age;
     //enum mbti = {};
+    
 };
 class Location : public PersonalInfo
 {
@@ -28,4 +29,6 @@ private:
 };
 int main(void)
 {
+    std::cout<<"Hello";
+    return 0;
 }

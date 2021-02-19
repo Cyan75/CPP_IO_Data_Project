@@ -1,3 +1,4 @@
+
 /* 
 taking strings/ints/enum for an element: name, age, city, mbti 
 prevent stack overflow e.g. age over 99999999999999
@@ -18,7 +19,10 @@ to make mulitudinous sets of profile, there are two ways:
 
 int main(void)
 {
-    PersonalInfo *p1 = new PersonalInfo;
-    delete p1;
+    //PersonalInfo *p1 = new PersonalInfo;
+    //delete p1;
+    PersonalInfo obj;
+    obj.setName("Mike");
+    std::cout<<obj.getName();
     return 0;
 }

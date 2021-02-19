@@ -1,12 +1,14 @@
+#ifndef _PERSONALINFO_H_
+#define _PERSONALINFO_H_
 #include <iostream>
 #include <fstream>
-#ifndef PERSONALINFO_H
-#define PERSONALINFO_H
+
 class PersonalInfo
 {
 private:
     std::string name;
     int age;
+
 public:
     PersonalInfo();
     ~PersonalInfo();
@@ -16,12 +18,8 @@ public:
     int getAge(void);
 };
 
-PersonalInfo::PersonalInfo(/* args */)
-{
-}
+//PersonalInfo::PersonalInfo() : name("X"), age(20) {}
 
-PersonalInfo::~PersonalInfo()
-{
-}
+//PersonalInfo::~PersonalInfo() {}
 
-#endif PERSONALINFO_H
+#endif

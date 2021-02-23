@@ -11,17 +11,18 @@ int main(void)
     std::ofstream nameAge("namesAndAges.txt");
     if (unknownName.is_open() && unknownAge.is_open())
     {
-        std::string name;
-        std::string ageStr;
-        std::stringstream age;
-        // I do not know why this generates error -> more study on stringstream that interchanges string and numerique types
-        // the compiler does not perceives << as insertion operator
-        while (std::getline(unknownName, name) && std::getline(unknownAge, ageStr))
+        std::string *name = new std::string;
+        std::string *ageStr = new std::string;
+        while (std::getline(unknownName, *name) && std::getline(unknownAge, *ageStr))
         {
-            age >> ageStr;
-            std::cout << name << ", " << ageStr << std::endl;
+            short *age = new short;
+           *age = std::stoi(*ageStr);
+            std::cout << *name << ", " << *age << "," << std::endl;
+            delete age;
         }
         unknownName.close();
+        delete ageStr;
+        delete name;
     }
     else
     {

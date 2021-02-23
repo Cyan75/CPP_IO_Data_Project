@@ -13,13 +13,13 @@ int main(void)
     {
         std::string name;
         std::string ageStr;
-        std::stringstream age(ageStr);
+        std::stringstream age;
         // I do not know why this generates error -> more study on stringstream that interchanges string and numerique types
         // the compiler does not perceives << as insertion operator
         while (std::getline(unknownName, name) && std::getline(unknownAge, ageStr))
         {
-            std::cout << name << ", ";
-            std::cout << age << std::endl;
+            age >> ageStr;
+            std::cout << name << ", " << ageStr << std::endl;
         }
         unknownName.close();
     }

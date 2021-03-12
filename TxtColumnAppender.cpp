@@ -10,6 +10,20 @@ private:
     std::string originalFileName;
     std::string additionalFileName;
     std::string combinedFileName;
+    short getFileLines(std::string fileName)
+    {
+        std::ifstream file(fileName);
+        std::string line;
+        short numLines = 0;
+        if (file.is_open())
+        {
+            while (std::getline(file, line))
+            {
+                numLines++;
+            }
+        }
+        return numLines;
+    }
 
 public:
     TxtColumnAppender(std::string firstFileName, std::string secondFileName, std::string newFileName)
@@ -45,20 +59,6 @@ public:
             fileOne.close();
             fileTwo.close();
         }
-    }
-    short getFileLines(std::string fileName)
-    {
-        std::ifstream file(fileName);
-        std::string line;
-        short numLines = 0;
-        if (file.is_open())
-        {
-            while (std::getline(file, line))
-            {
-                numLines++;
-            }
-        }
-        return numLines;
     }
 };
 

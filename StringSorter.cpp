@@ -8,31 +8,19 @@ class StringSorter
 {
 private:
     std::string fileName;
-    void compareTwoStrings(std::string primary, std::string secondary)
+    void compareSizeTwoStrings(std::string primary, std::string secondary) //first
     {
-
         std::string::iterator itP = primary.begin();
         std::string::iterator itS = secondary.begin();
-        //for(itP, itS)??
-        /* Jo           J       o
-           Joe          J       o       e
-           Joy          J       o       y
-           Joya         J       o       y       a
-        */
-        //if (both itP, itS are present, then compare)
         if (primary.size() == secondary.size())
         {
+            /* 
+            Joe          J       o       e
+            Joy          J       o       y
+            */
             for (short i = 0; i < secondary.size(); ++i)
             {
-                if (*itP == *itS)
-                {
-                    itP++;
-                    itS++;
-                }
-                //do not need to consider uppercase, lowercase comparison
-                //only the initials are capitalised
-                //should be modified when there is a name with a uppercase in the middle
-                else
+                if (*itP != *itS)
                 {
                     short numP = static_cast<short>(*itP);
                     short numS = static_cast<short>(*itS);
@@ -46,30 +34,31 @@ private:
                     interchange(*/
                     }
                 }
+                //do not need to consider uppercase, lowercase comparison
+                //only the initials are capitalised
+                //should be modified when there is a name with a uppercase in the middle
+                else
+                {
+                }
             }
         }
-        else //p and s have different string_size
+
+        else //primary.size() != secondary.size()
         {
             /* 
             Joe          J       o       e
-            Jo           J       o
             Joy          J       o       y
             Joya         J       o       y       a 
             */
             short min = std::min(primary.size(), secondary.size());
             for (short i = 0; i < min; ++i)
             {
-                if (*itP == *itS)
-                {
-                    itP++;
-                    itS++;
-                }
-                else
-                {
-                    /*code*/
-                }
             }
         }
+    }
+    //
+    void compareTwoLetter(char firstLetter, char secondLetter)
+    {
     }
     void interchange(std::string primary, std::string secondary)
     {

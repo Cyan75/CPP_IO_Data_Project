@@ -4,6 +4,8 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <algorithm>
 
 class StringSorter
 {
@@ -13,7 +15,6 @@ public:
         *iFileName = inputFileName;
         *oFileName = outputFileName;
         std::vector<std::string> *unsorted = new std::vector<std::string>;
-        //std::vector<std::string>::iterator itU = unsorted->begin();
         std::ifstream inputFile(*iFileName);
         if (inputFile.is_open())
         {
@@ -27,7 +28,9 @@ public:
         {
             std::cout << "unable to open the text file" << std::endl;
         }
-        sort(*unsorted, *oFileName);
+        /*
+            sort
+        */
         delete unsorted;
     }
     short getFileLines(std::string fileName)
@@ -48,16 +51,11 @@ public:
 private:
     std::string *iFileName = new std::string;
     std::string *oFileName = new std::string;
+
     bool ifTwoStringShoulBeInterchanged(std::string primary, std::string secondary)
     {
         std::string::iterator itP = primary.begin();
         std::string::iterator itS = secondary.begin();
-        /* 
-            Joe          J 74       o 111      e 101     '' 0
-            Joy          J 74       o 111      y 121     '' 0
-            Joya         J 74       o 111      y 121      a 97
-            Fio          F 70       i 105      o 111     '' 0
-        */
         while (*itP == *itS)
         {
             itP++;
@@ -87,14 +85,42 @@ private:
             return false;
         }
     }
-    void sort(std::vector<std::string> pListOfStrings, std::string oFileName)
+    /*
+        • collect pivot candidates randomly
+        • default number of the candidates is three(fix?)
+        • choose the middle as the pivot
+        • 
+    */
+    std::vector<std::string> quickSort(std::vector<std::string> unsortedVector)
     {
-        /* code */
-        
-        std::ofstream outputFile;
-        if (outputFile.is_open())
+        short max = unsortedVector.size();
+        short pivotCandidateNum = 3;
+        std::vector<short> pivotCandidates;
+        for (short i = 0; i < pivotCandidateNum; ++i)
         {
-            
+            std::srand(std::time(nullptr));
+            short *pickRandom = new short;
+            *pickRandom = (std::rand() % max);
+            pivotCandidates.push_back(*pickRandom);
+            delete pickRandom;
         }
+        std::sort(pivotCandidates.begin(), pivotCandidates.end());
+        short pivotIndex = ((*pivotCandidates.begin() + *(pivotCandidates.end() - 1)) >> 1) / 2;
+        /*
+        what type should the pivot have???? 
+        ?? pivot = ????
+        */
+
+        std::vector<std::string>::iterator itRight = unsortedVector.begin();
+        std::vector<std::string>::iterator itLeft = unsortedVector.begin();
+        do
+        {
+            if (false/*ifTwoStringShoulBeInterchanged()*/)
+            {
+                /* code */
+            }
+            
+        } while (false/* condition */);
+        
     }
 };

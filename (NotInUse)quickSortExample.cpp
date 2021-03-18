@@ -5,7 +5,7 @@
 #include <random>
 
 
-/* std::random_device rd;
+std::random_device rd;
 std::mt19937 mt(rd());
 
 template <typename T>
@@ -47,4 +47,4 @@ void quickSort(vector<T> &vec, const int &left, const int &right)
     quickSort(vec, left, current - 1);
     quickSort(vec, current + 1, right);
 }
- */
+ 

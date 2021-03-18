@@ -12,16 +12,17 @@ class StringSorter
 public:
     StringSorter(std::string inputFileName, std::string outputFileName)
     {
+        pivotCandidateNum = 3;
         *iFileName = inputFileName;
         *oFileName = outputFileName;
-        std::vector<std::string> *unsorted = new std::vector<std::string>;
         std::ifstream inputFile(*iFileName);
         if (inputFile.is_open())
         {
             std::string line;
             while (std::getline(inputFile, line))
             {
-                unsorted->push_back(line);
+                unsortedVector.push_back(line);
+                sortedVector.push_back(line);
             }
         }
         else
@@ -31,7 +32,6 @@ public:
         /*
             sort
         */
-        delete unsorted;
     }
     short getFileLines(std::string fileName)
     {
@@ -47,12 +47,18 @@ public:
         }
         return numLines;
     }
+    void setPivotCandidateNum(short setPivotCandidateNum)
+    {
+        pivotCandidateNum = setPivotCandidateNum;
+    }
 
 private:
     std::string *iFileName = new std::string;
     std::string *oFileName = new std::string;
-
-    bool ifTwoStringShoulBeInterchanged(std::string primary, std::string secondary)
+    short pivotCandidateNum;
+    std::vector<std::string> unsortedVector;
+    std::vector<std::string> sortedVector;
+    bool letItBe(std::string primary, std::string secondary)
     {
         std::string::iterator itP = primary.begin();
         std::string::iterator itS = secondary.begin();
@@ -63,7 +69,7 @@ private:
             // duplication exceptions?
         }
         //*itP != *itS
-        if (ifTwoCharsAreInOrder(itP, itS))
+        if (primaryGoesFirst(itP, itS))
         {
             return true;
         }
@@ -72,11 +78,12 @@ private:
             return false;
         }
     }
-    bool ifTwoCharsAreInOrder(std::string::iterator it1, std::string::iterator it2) //special characters? ¿, ú, á, ô ... s
+    //special characters? ¿, ú, á, ô ... s???
+    bool primaryGoesFirst(std::string::iterator it1, std::string::iterator it2)
     {
         short numP = static_cast<short>(*it1);
         short numS = static_cast<short>(*it2);
-        if (numP > numS)
+        if (numP < numS) // in right order
         {
             return true;
         }
@@ -91,10 +98,10 @@ private:
         • choose the middle as the pivot
         • 
     */
-    std::vector<std::string> quickSort(std::vector<std::string> unsortedVector)
+
+    short getPivotIndex(std::vector<std::string> vectorToBeSorted) //for quicksort
     {
-        short max = unsortedVector.size();
-        short pivotCandidateNum = 3;
+        short max = vectorToBeSorted.size();
         std::vector<short> pivotCandidates;
         for (short i = 0; i < pivotCandidateNum; ++i)
         {
@@ -105,22 +112,35 @@ private:
             delete pickRandom;
         }
         std::sort(pivotCandidates.begin(), pivotCandidates.end());
-        short pivotIndex = ((*pivotCandidates.begin() + *(pivotCandidates.end() - 1)) >> 1) / 2;
-        /*
+        return (((*pivotCandidates.begin() + *(pivotCandidates.end() - 1)) >> 1) / 2);
+    }
+    /*
         what type should the pivot have???? 
         ?? pivot = ????
         */
-
-        std::vector<std::string>::iterator itRight = unsortedVector.begin();
-        std::vector<std::string>::iterator itLeft = unsortedVector.begin();
+    std::vector<std::string> sortVector(void)
+    {
+        //what is the meaning of const?
+        std::vector<std::string>::iterator itL = sortedVector.begin();
+        std::vector<std::string>::iterator const itP = sortedVector.begin() + getPivotIndex(sortedVector);
+        std::vector<std::string>::iterator itR = sortedVector.end() - 1;
+        //EXCEPTION WARNING! consider when itR or itL points the same address as itP
+        //letItBe(itR,itP)
         do
         {
-            if (false/*ifTwoStringShoulBeInterchanged()*/)
-            {
-                /* code */
-            }
-            
-        } while (false/* condition */);
-        
+            /*  if (*itL>*itP){swap!} */
+            std::swap(*itL, *itP);
+            itL++;
+        } while (!letItBe(*itL, *itP));
     }
+     /*
+    LLLLLLLLLLLLLRRRRRRRRRRRRRRRRRRRRRRR
+        LLLLLLLLLLLL -> LLLLLLLLLLL ->  LLLLLLLLRRR 
+                                                        -> LLLLLLLL -> ...
+                                                        -> RRR -> ...
+                                                        
+        RRRRRRRRRRRRRRRRRRRRRRR ->  RRRRRRRRRRRRRRRRRRRRRR -> LLLLLRRRRRRRRRRRRRRRRR  
+                                                                                        -> LLLLL -> ...
+                                                                                        -> RRRRRRRRRRRRRRRRR -> ...
+    */
 };

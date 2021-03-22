@@ -30,13 +30,12 @@ private:
     std::vector<short>::iterator itP;
     short sizeOfVec;
     short pivotCandNum;
-   // short *p_Pivot;
 
 public:
     QuickSortAlgorithm(std::string fileName)
     {
         sizeOfVec = 0;
-        pivotCandNum = 1;
+        pivotCandNum = 1; //the number of candidates one of them can be the pivot
         itP = vec.begin();
         std::ifstream unsorted(fileName);
         if (unsorted.is_open())
@@ -86,7 +85,7 @@ public:
             return ((std::rand()) % pivotCandNum);
         }
     }
-    short getPivotIndex(void) 
+    short getPivotIndex(void)
     {
         std::vector<short> candidates;
         for (short i = 0; i < pivotCandNum; ++i)
@@ -94,11 +93,16 @@ public:
             candidates.push_back(ranNumGen());
         }
         /*
-        HERE I NEED AN INGENIUS ALGORITHM IDEA
-        ¿¿¿  how to choose a representative value ???*/
-        return 0;
+        */
+        return *(candidates.begin() + ranNumGen());
     }
-
+    void sort(void)
+    {
+        /* how to determine if the sort is finished? 
+        : the size of the all the remant vector is one
+        
+        */
+    }
 };
 
 /* 

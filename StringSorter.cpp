@@ -33,6 +33,11 @@ public:
             sort
         */
     }
+    ~StringSorter()
+    {
+        delete iFileName;
+        delete oFileName;
+    }
     short getFileLines(std::string fileName)
     {
         std::ifstream file(fileName);

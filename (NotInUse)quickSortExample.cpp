@@ -53,7 +53,7 @@ public:
             std::cout << "Oops!" << std::endl;
         }
     }
-    virtual bool swapSwitch(short a, short b)
+    virtual bool swapOn(short a, short b)
     {
         /** this is the part that specifies a rule for sort using pivot **/
         if (a > b)
@@ -85,22 +85,36 @@ public:
             return ((std::rand()) % pivotCandNum);
         }
     }
+    /*
+    • pivot candidates are randomly selected
+    */
     short getPivotIndex(void)
     {
         std::vector<short> candidates;
         for (short i = 0; i < pivotCandNum; ++i)
         {
-            candidates.push_back(ranNumGen());
+            short *random = new short;
+            *random = ranNumGen();
+            candidates.push_back(*random);
+            delete random;
         }
         /*
+        choose the random()-th element
         */
         return *(candidates.begin() + ranNumGen());
     }
     void sort(void)
     {
+        std::vector<short>::iterator itL = vec.begin();
+        std::vector<short>::iterator itR = vec.begin();
+        std::vector<short>::iterator itP = vec.begin() + getPivotIndex();
+        do
+        {
+            /* code */
+        } while (/* condition */);
+
         /* how to determine if the sort is finished? 
         : the size of the all the remant vector is one
-        
         */
     }
 };

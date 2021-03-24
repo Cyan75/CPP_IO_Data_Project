@@ -15,14 +15,32 @@ to make mulitudinous sets of profile, there are two ways:
 */
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <iterator>
+#include <algorithm>
 #include "PersonalInfo.h"
 
 int main(void)
 {
     //PersonalInfo *p1 = new PersonalInfo;
     //delete p1;
-    PersonalInfo obj;
+    /* PersonalInfo obj;
     obj.setName("Mike");
-    std::cout<<obj.getName();
+    std::cout<<obj.getName(); */
+    /* below is examination of behabiour of iterators along std::iter_swap */
+    std::vector<short> vec = {4, 6, 2, 1, 9, 7, 5, 3};
+    std::vector<short>::iterator itB = vec.begin();
+    std::vector<short>::iterator itE = vec.end() - 1;
+    std::cout << " *itB = " << *itB << std::endl;
+    std::cout << " *itE = " << *itE << std::endl;
+    std::iter_swap(itB, itE);
+    std::cout << " std::iter_swap(itB,itE); " << std::endl;
+    std::cout << " *itB = " << *itB << std::endl;
+    std::cout << " *itE = " << *itE << std::endl;
+    std::cout << " The iterators are still pointing the physical places(addresses),\n instead of chaing the values which they were indicating!" << std::endl;
+    
+    itB = itE;
+    std::cout << " *itB = *itE     ->    *itB =  " << *itB << std::endl;
+
     return 0;
 }

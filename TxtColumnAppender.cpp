@@ -26,19 +26,19 @@ private:
     }
 
 public:
-    TxtColumnAppender(std::string firstFileName, std::string secondFileName, std::string newFileName)
+    TxtColumnAppender(std::string originalFileName, std::string additionalFileName, std::string combinedFileName)
     {
-        originalFileName = firstFileName;
-        additionalFileName = secondFileName;
-        combinedFileName = newFileName;
-        std::ifstream fileOne(originalFileName);
-        std::ifstream fileTwo(additionalFileName);
+        this->originalFileName = originalFileName;
+        this->additionalFileName = additionalFileName;
+        this->combinedFileName = combinedFileName;
+        std::ifstream fileOne(this->originalFileName);
+        std::ifstream fileTwo(this->additionalFileName);
         if (fileOne.is_open() && fileTwo.is_open())
         {
-            if (getFileLines(originalFileName) == getFileLines(additionalFileName))
+            if (getFileLines(this->originalFileName) == getFileLines(this->additionalFileName))
             {
                 //std::cout << " data files are compatible " << std::endl;
-                std::ofstream resultingFile(combinedFileName);
+                std::ofstream resultingFile(this->combinedFileName);
                 std::string *name = new std::string;
                 std::string *ageStr = new std::string;
                 while (std::getline(fileOne, *name) && std::getline(fileTwo, *ageStr))

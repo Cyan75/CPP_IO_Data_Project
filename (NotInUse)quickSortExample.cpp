@@ -9,6 +9,7 @@
 #include <vector>
 #include <random>
 #include <iterator>
+#include <algorithm>
 
 /*
     MODULISATION PLAN
@@ -53,7 +54,7 @@ public:
             std::cout << "Oops!" << std::endl;
         }
     }
-    virtual bool swapOn(short a, short b)
+    virtual bool swap(short a, short b)
     {
         /** this is the part that specifies a rule for sort using pivot **/
         if (a > b)
@@ -105,13 +106,17 @@ public:
     }
     void sort(void)
     {
-        std::vector<short>::iterator itL = vec.begin();
-        std::vector<short>::iterator itR = vec.begin();
-        std::vector<short>::iterator itP = vec.begin() + getPivotIndex();
+        std::vector<short>::iterator iL = vec.begin();
+        std::vector<short>::iterator iR = vec.begin();
+        std::vector<short>::iterator iP = vec.begin() + getPivotIndex();
         do
         {
+            if(swap(*iL,*iP))
+            {
+                std::iter_swap(iL,iP);
+            }
             /* code */
-        } while (/* condition */);
+        } while (false);
 
         /* how to determine if the sort is finished? 
         : the size of the all the remant vector is one

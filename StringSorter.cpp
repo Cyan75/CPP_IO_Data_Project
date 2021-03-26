@@ -13,9 +13,9 @@ public:
     StringSorter(std::string inputFileName, std::string outputFileName)
     {
         pivotCandidateNum = 3;
-        *iFileName = inputFileName;
-        *oFileName = outputFileName;
-        std::ifstream inputFile(*iFileName);
+        *(this->inputFileName) = inputFileName;
+        *(this->outputFileName) = outputFileName;
+        std::ifstream inputFile(*(this->inputFileName));
         if (inputFile.is_open())
         {
             std::string line;
@@ -35,8 +35,8 @@ public:
     }
     ~StringSorter()
     {
-        delete iFileName;
-        delete oFileName;
+        delete inputFileName;
+        delete outputFileName;
     }
     short getFileLines(std::string fileName)
     {
@@ -58,8 +58,8 @@ public:
     }
 
 private:
-    std::string *iFileName = new std::string;
-    std::string *oFileName = new std::string;
+    std::string *inputFileName = new std::string;
+    std::string *outputFileName = new std::string;
     short pivotCandidateNum;
     std::vector<std::string> unsortedVector;
     std::vector<std::string> sortedVector;
@@ -103,11 +103,11 @@ private:
         • choose the middle as the pivot
         • 
     */
-
     short getPivotIndex(std::vector<std::string> vectorToBeSorted) //for quicksort
     {
         short max = vectorToBeSorted.size();
         std::vector<short> pivotCandidates;
+        /* this vector stores indices of pivot canndidates */
         for (short i = 0; i < pivotCandidateNum; ++i)
         {
             std::srand(std::time(nullptr));

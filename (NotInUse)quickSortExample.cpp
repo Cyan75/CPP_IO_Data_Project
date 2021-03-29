@@ -28,6 +28,10 @@ class QuickSortAlgorithm
 {
 private:
     std::vector<short> vec;
+    /* 
+    do i need to declare the iterator for pivot here? 
+    if so, I need to initialise in the constructor 
+    */
     std::vector<short>::iterator itP;
     short sizeOfVec;
     short pivotCandNum;
@@ -37,7 +41,7 @@ public:
     {
         sizeOfVec = 0;
         pivotCandNum = 1; //the number of candidates one of them can be the pivot
-        itP = vec.begin();
+        itP = vec.begin() + getPivotIndex();
         std::ifstream unsorted(fileName);
         if (unsorted.is_open())
         {
@@ -106,49 +110,34 @@ public:
     }
     void sort(void)
     {
-        std::vector<short>::iterator iL = vec.begin();
-        std::vector<short>::iterator iR = vec.end() - 1;
         std::vector<short>::iterator iP = vec.begin() + getPivotIndex();
-        /*
+        std::vector<short> vecL(vec.begin(), iP - 1);
+        std::vector<short>::iterator iL = vecL.begin();
+        std::vector<short> vecR(iP + 1, vec.end() - 1);
+        std::vector<short>::iterator iR = vecR.begin();
+//---------PROPAGATING ITERATION UNIT---------------------------------------------------------------------------------------
+        std::vector<short> *leftBuffer = new std::vector<short>;
 
-        4   5   8  2   6   9  1   7   0
-        L              P              R
-        4   5   8  2   6   9  1   7   0
-            L          P              R
-        4   5   8  2   6   9  1   7   0
-                L      P              R
-        4   5   0  2   6   9  1   7   8
-                L      P              R
-        4   5   0  2   6   9  1   7   8
-                   L   P          R
-
-        */
-        do
+        for (std::vector<short>::iterator iL = vecL.begin(); iL != vecL.end(); ++iL)
         {
-            short pivot = *iP;
-            if (letItBe())
+            if (!letItBe(*iL, *iP))
             {
-                if (letItBe())
-                {
-                    std::iter_swap();
-                }
-                else if ()
-                {
-                    /* code */
-                }
-                else
-                {
-                }
+                leftBuffer->push_back(*iL);
+                vecL.erase(iL);
             }
-            else if ()
-            {
-                /* code */
-            }
-            else
-            {
-            }
-        } while ();
+        }
 
+        for (std::vector<short>::iterator iR = vecL.begin(); iR != vecL.end(); ++iR)
+        {
+            if (!letItBe(*iP, *iR))
+            {
+                vecL.push_back(*iR);
+                vecR.erase(iR);
+                vecR.insert(vecR.end(), leftBuffer->begin(), leftBuffer->end());
+            }
+        }
+        delete leftBuffer;
+//------------------------------------------------------------------------------------------------
         /* how to determine if the sort is finished? 
         : the size of the all the remant vector is one
         */

@@ -54,14 +54,14 @@ public:
             std::cout << "Oops!" << std::endl;
         }
     }
-    virtual bool swapThese(short a, short b)
+    virtual bool letItBe(short a, short b)
     {
         /** this is the part that specifies a rule for sort using pivot **/
-        if (a > b)
+        if (a < b)
         {
             return true;
         }
-        else//a==b?
+        else //a==b?
         {
             return false;
         }
@@ -110,6 +110,7 @@ public:
         std::vector<short>::iterator iR = vec.end() - 1;
         std::vector<short>::iterator iP = vec.begin() + getPivotIndex();
         /*
+
         4   5   8  2   6   9  1   7   0
         L              P              R
         4   5   8  2   6   9  1   7   0
@@ -124,32 +125,29 @@ public:
         */
         do
         {
-            if (swapThese(*iL, *iP))
+            short pivot = *iP;
+            if (letItBe())
             {
-                if (swapThese(*iP, *iR))
+                if (letItBe())
                 {
-                    std::iter_swap(iL, iR);
-                    iL++;
-                    iR--;
+                    std::iter_swap();
                 }
-                else if (iL==iP)
+                else if ()
                 {
                     /* code */
                 }
                 else
                 {
-                    iR--;
                 }
             }
-            else if (iR==iP)
+            else if ()
             {
                 /* code */
             }
             else
             {
-                iL++;
             }
-        } while (iL == iP || iR == iP);
+        } while ();
 
         /* how to determine if the sort is finished? 
         : the size of the all the remant vector is one

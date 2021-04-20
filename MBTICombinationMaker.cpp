@@ -1,3 +1,4 @@
+#include "MBTICombinationMaker.hpp"
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -7,44 +8,31 @@ repeate the sequence in an order
 (allocate -> store a generated one -> cout -> deallocate)
 Time to make some ideas for MBTI generation algorithm!!!
 */
-class MBTICombinationMaker
+pio::MBTICombinationMaker::MBTICombinationMaker(void)
 {
-private:
-    std::vector<char> entp = {'E', 'N', 'T', 'P'};
-    std::vector<char> isfj = {'I', 'S', 'F', 'J'};
-
-public:
-    MBTICombinationMaker(void)
+    const std::vector<char> entp = {'E', 'N', 'T', 'P'};
+    const std::vector<char> isfj = {'I', 'S', 'F', 'J'};
+    std::ofstream mbti("MBTICombination.txt");
+    for (short it = 0; it < 16; ++it)
     {
-        std::ofstream mbti("MBTICombination.txt");
-        for (short it = 0; it < 16; ++it)
+        std::string *pStr = new std::string;
+        for (short itMode = 0; itMode < 4; ++itMode)
         {
-            std::string *pStr = new std::string;
-            for (short itMode = 0; itMode < 4; ++itMode)
+            if (((it >> itMode) & 1) == 1)
             {
-                if (((it >> itMode) & 1) == 1)
-                {
-                    *pStr = *pStr + entp[itMode];
-                }
-                else
-                {
-                    *pStr = *pStr + isfj[itMode];
-                }
+                *pStr = *pStr + entp[itMode];
             }
-            mbti << *pStr;
-            if (it != 15)
+            else
             {
-                mbti << std::endl;
+                *pStr = *pStr + isfj[itMode];
             }
-            delete pStr;
         }
-        mbti.close();
+        mbti << *pStr;
+        if (it != 15)
+        {
+            mbti << std::endl;
+        }
+        delete pStr;
     }
-};
-
-int main(void)
-{
-    MBTICombinationMaker *obj = new MBTICombinationMaker;
-    delete obj;
-    return 0;
+    mbti.close();
 }
